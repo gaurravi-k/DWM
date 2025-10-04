@@ -1,0 +1,67 @@
+import pandas as pd
+import random
+import statistics as st
+def main():
+ # Get input from user
+ l = list(map(int, input("Enter List of Numbers: 
+").split(",")))
+ k = int(input("Enter K: "))
+ 
+ # Initialize klist with first k elements
+ klist = []
+ for i in range(k):
+ klist.append(l[i])
+ 
+ iteration_count = 0
+ while True:
+ iteration_count += 1
+ print(f"\n--- Iteration {iteration_count} ---")
+ 
+ # Initialize clusters
+ clusters = []
+ for d in klist:
+ clusters.append([int(d)])
+ 
+ # Assign each data point to the closest cluster
+ for d in l:
+ newlist = []
+ for j in klist:
+ newlist.append(abs(j - d))
+ 
+ clusters[newlist.index(min(newlist))].append(int(d))
+ 
+ print("Current clusters:")
+ for i, cluster in enumerate(clusters):
+ print(f"Cluster {i+1}: {cluster}")
+ 
+ # Calculate new centroids
+ newklist = []
+ for i in range(k):
+ newklist.append(sum(list(clusters[i])) / 
+len(clusters[i]))
+ 
+ print(f"Current centroids: {klist}")
+ print(f"New centroids: {newklist}")
+# Check for convergence
+ if newklist == klist:
+ print("\nConvergence reached!")
+ break
+ else:
+ klist = newklist
+ 
+ # Clean up clusters (remove centroid values that weren't in 
+original data)
+ for i in range(k):
+ if klist[i] not in l:
+ clusters[i].remove(int(klist[i]))
+ 
+ print("\nFinal Results:")
+ print("=" * 30)
+ print(f"Final centroids: {klist}")
+ print("Final clusters:")
+ for i, cluster in enumerate(clusters):
+ print(f"Cluster {i+1}: {cluster}")
+ 
+ return clusters
+if __name__ == "__main__":
+ clusters = main()
