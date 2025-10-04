@@ -1,0 +1,36 @@
+import pandas as pd
+import numpy as np
+from math import log
+# Replace this path with your dataset path
+file_path = r"C:\Users\kajro\Downloads\dataset5.csv"
+# Load the CSV
+df = pd.read_csv(file_path)
+# Show the first few rows
+print(df.head())
+# Set index if needed (optional, only if your CSV has 
+'id' column)
+if 'id' in df.columns:
+ df.set_index('id', inplace=True)
+# Calculate total entropy (Info)
+info = 0
+vc = df['class'].value_counts(normalize=True)
+for item in df['class'].unique():
+ info += -(vc[item] * log(vc[item], 2))
+print("Total Info (Entropy) of class:", info)
+# List of attributes (excluding the class column)
+attributes = list(df.columns)
+attributes.remove('class')
+# Calculate Information Gain for each attribute
+for attr in attributes:
+ info_smol = 0
+ vc_attr = df[attr].value_counts(normalize=True)
+ vc_class = 
+df.groupby(attr)['class'].value_counts(normalize=True)
+ for val in df[attr].unique():
+ for target in vc_class[val].index:
+ info_smol += - vc_attr[val] * 
+vc_class[val][target] * log(vc_class[val][target], 2)
+ig = info - info_smol
+ print(f"Attribute: {attr}")
+ print(f"Information Gain = {ig}")
+ print(f"Info (after split) = {info_smol}\n")
