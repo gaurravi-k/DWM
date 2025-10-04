@@ -1,0 +1,61 @@
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+# Load CSV file from your Downloads folder
+df = pd.read_csv(r"C:\Users\kajro\Downloads\Iris.csv")
+print(df)
+# -------------------------
+# Histogram
+# -------------------------
+petal_width_list = df['PetalWidthCm'].tolist()
+plt.hist(petal_width_list, bins=40, color='skyblue', 
+edgecolor='black')
+plt.title('Histogram of Petal Width')
+plt.xlabel('PetalWidthCm')
+plt.ylabel('Frequency')
+plt.show()
+# -------------------------
+# Scatter Plot
+# -------------------------
+X = df["SepalLengthCm"]
+Y = df["PetalLengthCm"]
+plt.scatter(X, Y, color='#009933', marker='o', s=50)
+plt.title("Scatter Plot of PetalLength vs SepalLength")
+plt.xlabel("SepalLengthCm")
+plt.ylabel("PetalLengthCm")
+plt.show()
+# -------------------------
+# Pie Chart
+# -------------------------
+labels = df['PetalLengthCm'].head().astype(str) # convert to 
+string for labels
+sizes = df['SepalLengthCm'].head()
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, 
+startangle=90)
+ax1.axis('equal')
+plt.show()
+# -------------------------
+# Boxplot
+# -------------------------
+plt.boxplot(df['PetalLengthCm'])
+plt.title("Boxplot of PetalLengthCm")
+plt.show()
+# -------------------------
+# Line Graph
+# -------------------------
+plt.plot(df['PetalLengthCm'], df['SepalLengthCm'], marker='o')
+plt.title("Line Graph of SepalLength vs PetalLength")
+plt.xlabel("PetalLengthCm")
+plt.ylabel("SepalLengthCm")
+plt.show()
+# -------------------------
+# Bar Graph
+# -------------------------
+plt.bar(df['SepalLengthCm'], df['PetalLengthCm'], 
+color='orange')
+plt.xlabel("SepalLengthCm")
+plt.ylabel("PetalLengthCm")
+plt.title("Bar Graph of SepalLength vs PetalLength")
+plt.show()
