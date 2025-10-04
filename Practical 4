@@ -1,0 +1,202 @@
+# Simple Linear 
+Regression:
+import numpy as np
+import pandas as pd
+# Read the CSV file with 
+direct path
+df = 
+pd.read_csv(r"C:\Use
+rs\kajro\Downloads\s
+alary_data.csv")
+print(df)
+n = df.shape[0]
+X = np.array(df.iloc[:, 
+:1])
+Y = np.array(df.iloc[:, 
+-1])
+Xi_Xm = []
+Yi_Ym = []
+Num = []
+Xi_Xm_2 = []
+X_mean = X.mean()
+Y_mean = Y.mean()
+print("\nMean of X : ", 
+X_mean)
+print("Mean of Y : ", 
+Y_mean)
+print("\nn:", n)
+for i in range(n):
+ Xi_Xm.append(X[i] -
+X_mean)
+ Yi_Ym.append(Y[i] -
+Y_mean)
+ Num.append(Xi_Xm[i] 
+* Yi_Ym[i])
+ 
+Xi_Xm_2.append(Xi_Xm
+[i] ** 2)
+Num_mean = np.mean(Num)
+Den_mean = 
+np.mean(Xi_Xm_2)
+m = Num_mean / Den_mean
+print("m : ", m)
+b = Y_mean - m * X_mean
+print("b : ", b)
+def salary_predict(exp):
+return m * exp + b
+Exp = int(input("\nEnter 
+Experience: "))
+print("\nSalary for 
+Experience ", Exp, 
+"is ", 
+salary_predict(Exp), 
+"\n\n")
+# Multiple Linear 
+Regression:
+print("Multiple Linear 
+Regression:\n")
+# Read the Iris dataset 
+with direct path
+df = 
+pd.read_csv(r"C:\Use
+rs\kajro\Downloads\I
+ris.csv")
+df['Species'] = 
+df['Species'].replac
+e('Iris-setosa', 1)
+df['Species'] = 
+df['Species'].replac
+e('Iris-versicolor', 
+2)
+df['Species'] = 
+df['Species'].replac
+e('Iris-virginica', 
+3)
+X1 = np.array(df.iloc[:, 
+1:2]) # SepalLength
+X2 = np.array(df.iloc[:, 
+2:3]) # SepalWidth 
+X3 = np.array(df.iloc[:, 
+3:4]) # PetalLength
+X4 = np.array(df.iloc[:, 
+4:5]) # PetalWidth
+Y = np.array(df.iloc[:, 
+-1]) # Species
+X1_mean = X1.mean()
+X2_mean = X2.mean()
+X3_mean = X3.mean()
+X4_mean = X4.mean()
+Y_mean = Y.mean()
+print("Mean of X1 : ", 
+X1_mean)
+print("Mean of X2 : ", 
+X2_mean)
+print("Mean of X3 : ",
+X3_mean)
+print("Mean of X4 : ", 
+X4_mean)
+print("Mean of Y : ", 
+Y_mean)
+n = df.shape[0]
+print("\nn : ", n)
+Xi_Xm1 = []
+Xi_Xm2 = []
+Xi_Xm3 = []
+Xi_Xm4 = []
+Yi_Ym = []
+Num1 = []
+Num2 = []
+Num3 = []
+Num4 = []
+Xi_Xm1_2 = []
+Xi_Xm2_2 = []
+Xi_Xm3_2 = []
+Xi_Xm4_2 = []
+for i in range(n):
+ Xi_Xm1.append(X1[i] 
+- X1_mean)
+ Xi_Xm2.append(X2[i] 
+- X2_mean)
+ Xi_Xm3.append(X3[i] 
+- X3_mean)
+ Xi_Xm4.append(X4[i] 
+- X4_mean)
+ Yi_Ym.append(Y[i] -
+Y_mean)
+ 
+Num1.append(Xi_Xm1[i
+] * Yi_Ym[i])
+ 
+Num2.append(Xi_Xm2[i
+] * Yi_Ym[i])
+ 
+Num3.append(Xi_Xm3[i
+] * Yi_Ym[i])
+ 
+Num4.append(Xi_Xm4[i
+] * Yi_Ym[i])
+ 
+Xi_Xm1_2.append(Xi_X
+m1[i] ** 2)
+ 
+Xi_Xm2_2.append(Xi_X
+m2[i] ** 2)
+ 
+Xi_Xm3_2.append(Xi_X
+m3[i] ** 2)
+Xi_Xm4_2.append(Xi_X
+m4[i] ** 2)
+Num1_mean = 
+np.mean(Num1)
+Num2_mean = 
+np.mean(Num2)
+Num3_mean = 
+np.mean(Num3)
+Num4_mean = 
+np.mean(Num4)
+Den_mean1 = 
+np.mean(Xi_Xm1_2)
+Den_mean2 = 
+np.mean(Xi_Xm2_2)
+Den_mean3 = 
+np.mean(Xi_Xm3_2)
+Den_mean4 = 
+np.mean(Xi_Xm4_2)
+m1 = Num1_mean / 
+Den_mean1
+m2 = Num2_mean / 
+Den_mean2
+m3 = Num3_mean / 
+Den_mean3
+m4 = Num4_mean / 
+Den_mean4
+b = Y_mean - m1 * 
+X1_mean - m2 * 
+X2_mean - m3 * 
+X3_mean - m4 * 
+X4_mean
+print("m1 : ", m1)
+print("m2 : ", m2)
+print("m3 : ", m3)
+print("m4 : ", m4)
+print("b : ", b)
+def species_predict(X1, 
+X2, X3, X4):
+ return m1 * X1 + m2 
+* X2 + m3 * X3 + m4 
+* X4 + b
+SepalLength = 3.4
+SepalWidth = 3.2
+PetalLength = 1.2
+PetalWidth = 0.1
+print("\nIris Species 
+for Sepal Length", 
+SepalLength, " Sepal
+Width", SepalWidth, 
+ " Petal Length", 
+PetalLength, " 
+PetalWidth", 
+PetalWidth, " is ", 
+ species_predict(SepalLength, SepalWidth, PetalLength, 
+PetalWidth))
+
