@@ -1,0 +1,73 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from scipy.cluster.hierarchy import dendrogram
+from sklearn.datasets import load_iris
+from sklearn.cluster import AgglomerativeClustering
+def plot_dendrogram(model, **kwargs):
+ """
+ Function to plot dendrogram for hierarchical clustering
+ """
+ # Create linkage matrix counts
+ counts = np.zeros(model.children_.shape[0])
+ n_samples = len(model.labels_)
+ 
+ for i, merge in enumerate(model.children_):
+ current_count = 0
+ for child_idx in merge:
+ if child_idx < n_samples:
+ current_count += 1 # leaf node
+ else:
+ current_count += counts[child_idx - n_samples]
+ counts[i] = current_count
+ 
+ # Create the linkage matrix
+ linkage_matrix = np.column_stack([model.children_, 
+model.distances_, counts]).astype(float)
+ 
+ # Plot the dendrogram
+ dendrogram(linkage_matrix, **kwargs)
+def main():
+ """
+ Main function to perform hierarchical clustering and plot 
+dendrogram
+ """
+ print("Loading Iris dataset...")
+ 
+ # Load the iris dataset
+ iris = load_iris()
+ X = iris.data
+ 
+ print(f"Dataset shape: {X.shape}")
+ print(f"Feature names: {iris.feature_names}")
+ print(f"Target names: {iris.target_names}")
+ 
+ # Create and fit the hierarchical clustering model
+ print("\nPerforming hierarchical clustering...")
+ model = AgglomerativeClustering(distance_threshold=0, 
+n_clusters=None)
+ model = model.fit(X)
+ 
+ print("Plotting dendrogram...")
+ 
+ # Create the plot
+plt.figure(figsize=(10, 6))
+ plt.title('Hierarchical Clustering Dendrogram - Iris 
+Dataset')
+ plot_dendrogram(model, truncate_mode='level', p=3)
+ plt.xlabel("Number of points in node (or index of point if 
+no parenthesis)")
+ plt.ylabel("Distance")
+ plt.grid(True, alpha=0.3)
+ 
+ # Show the plot
+ plt.tight_layout()
+ plt.show()
+ 
+ print("\nDendrogram displayed successfully!")
+ 
+ # Additional information
+ print(f"\nAdditional Information:")
+ print(f"Number of leaves: {len(model.labels_)}")
+ print(f"Number of clusters found: {model.n_clusters_}")
+if __name__ == "__main__":
+ main()
