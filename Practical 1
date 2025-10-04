@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+# Read the CSV file directly from your computer
+file_path = r"C:\Users\kajro\Downloads\healthcare-dataset-
+stroke-data (1).csv"
+df = pd.read_csv(file_path)
+print("Dataset:")
+print(df)
+print("\n" + "="*50 + "\n")
+# Extract age data
+data = []
+for s in df['age']:
+ data.append(s)
+# Calculate mean
+mean = sum(data) / len(data)
+print("Mean age:", mean)
+# Calculate median
+data.sort()
+l = len(data) - 1
+if len(data) % 2 == 0:
+ m = data[l // 2] + data[(l // 2) + 1]
+ median = m / 2
+else:
+ median = data[int(l // 2)]
+print("Median of age:", median)
+# Calculate mode
+freq = {}
+set_data = set(data)
+for d in set_data:
+ freq[d] = data.count(d)
+c = freq.values()
+max_c = max(c)
+mode = []
+for f in freq:
+ if freq[f] == max_c:
+ mode.append(f)
+print("Mode:", mode)
+# Additional statistics using pandas built-in methods (for 
+verification)
+print("\n" + "="*50)
+print("Statistics using pandas built-in methods:")
+print(f"Mean: {df['age'].mean()}")
+print(f"Median: {df['age'].median()}")
+print(f"Mode: {df['age'].mode().tolist()}")
