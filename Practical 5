@@ -1,0 +1,67 @@
+import pandas as pd
+import numpy as np
+import os
+# Read the dataset
+df = pd.read_csv(r"C:\Users\kajro\Downloads\dataset5.csv")
+print("Dataset:")
+print(df.head())
+# Get user input for attributes
+attributes = {}
+attributes['age'] = input("Enter age: ")
+attributes['income'] = input("Enter Income: ")
+attributes['student'] = input("Enter student: ")
+attributes['credit_rating'] = input("Enter credit rating: 
+")
+print("\nInput attributes:")
+print(attributes)
+# Count yes and no classes
+count_yes = 0
+count_no = 0
+for d in df['class']:
+ if d == 'yes':
+ count_yes += 1
+ else:
+ count_no += 1
+print("\ncount of yes:", count_yes)
+print("count of no:", count_no)
+# Calculate probabilities
+p = {}
+p['yes'] = count_yes / len(df)
+p['no'] = count_no / len(df)
+print("\nprobability of class yes:", p['yes'])
+print("probability of class no:", p['no'])
+def calc_probability(attribute1, value1, attribute2, 
+value2):
+ global df
+ count = 0
+ for index, row in df.iterrows():
+ if row[attribute1] == value1 and row[attribute2] == 
+value2:
+ count += 1
+ return count
+# Calculate conditional probabilities
+p_yes = 1
+p_no = 1
+for a, b in attributes.items():
+ count_yes_attr = calc_probability(a, b, 'class', 'yes')
+ count_no_attr = calc_probability(a, b, 'class', 'no')
+ 
+ # Avoid division by zero and handle zero probabilities
+ prob_yes_given_attr = count_yes_attr / count_yes if 
+count_yes > 0 else 0
+prob_no_given_attr = count_no_attr / count_no if 
+count_no > 0 else 0
+ 
+ p_yes *= prob_yes_given_attr
+ p_no *= prob_no_given_attr
+# Multiply by prior probabilities
+p_yes *= p['yes']
+p_no *= p['no']
+print("\nFinal probabilities:")
+print("probability class yes:", p_yes)
+print("probability class no:", p_no)
+# Make prediction
+if p_yes > p_no:
+ print("\nPredicted class: yes")
+else:
+ print("\nPredicted class: no")
